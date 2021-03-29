@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/client-starter'],
+  projects: ['<rootDir>/apps/client-starter', '<rootDir>/apps/api-starter'],
 };
