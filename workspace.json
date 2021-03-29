@@ -28,9 +28,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/client-starter",
             "index": "apps/client-starter/src/index.html",
@@ -41,9 +39,7 @@
               "apps/client-starter/src/favicon.ico",
               "apps/client-starter/src/assets"
             ],
-            "styles": [
-              "apps/client-starter/src/styles.css"
-            ],
+            "styles": ["apps/client-starter/src/styles.css"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -87,16 +83,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/client-starter/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/client-starter/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/client-starter"
-          ],
+          "outputs": ["coverage/apps/client-starter"],
           "options": {
             "jestConfig": "apps/client-starter/jest.config.js",
             "passWithNoTests": true
@@ -125,9 +117,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/client-starter-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/client-starter-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -140,16 +130,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api-starter",
             "main": "apps/api-starter/src/main.ts",
             "tsConfig": "apps/api-starter/tsconfig.app.json",
-            "assets": [
-              "apps/api-starter/src/assets"
-            ]
+            "assets": ["apps/api-starter/src/assets"]
           },
           "configurations": {
             "production": {
@@ -174,16 +160,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/api-starter/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/api-starter/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/api-starter"
-          ],
+          "outputs": ["coverage/apps/api-starter"],
           "options": {
             "jestConfig": "apps/api-starter/jest.config.js",
             "passWithNoTests": true
