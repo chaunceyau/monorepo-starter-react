@@ -561,8 +561,7 @@ export function SidebarMenu() {
         </nav>
 
         {/* <!-- Main area --> */}
-        <main className="min-w-0 flex-1 border-t border-gray-200 lg:flex">
-        </main>
+        <main className="min-w-0 flex-1 border-t border-gray-200 lg:flex"></main>
       </div>
     </div>
   );
