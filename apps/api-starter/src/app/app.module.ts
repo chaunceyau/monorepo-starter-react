@@ -14,6 +14,7 @@ import { SubscriptionModule } from './subscription/subscription.module'
 import { CaslModule } from './casl/casl.module'
 @Module({
   imports: [
+    AccountModule,
     AuthModule,
     CaslModule,
     UserModule,

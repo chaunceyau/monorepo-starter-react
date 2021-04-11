@@ -3,15 +3,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   const alice = await prisma.user.create({
-    email: `alice@prisma.io`,
-    name: 'Alice',
-    posts: {
-      create: {
-        title: 'Check out Prisma with Next.js',
-        content: 'https://www.prisma.io/nextjs',
-        published: true,
-      },
-    },
+    data: {
+      id: "1",
+      salt: "0",
+      password: "pass",
+      username: "alice"
+    }
   });
 
   console.log({ alice });

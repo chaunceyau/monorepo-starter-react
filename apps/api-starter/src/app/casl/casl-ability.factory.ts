@@ -16,12 +16,14 @@ export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {
-  createForUser(user: User) {
+  createForUser(user?: User) {
     const { can, cannot, build } = new AbilityBuilder<
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
+    console.log("CaslAbilityFactory")
 
-    if (user.id === '4003k430') {
+    if (!user) {
+    } else if (user.id === '4003k430') {
       can(Action.Manage, 'all'); // read-write access to everything
     } else {
       can(Action.Read, 'all'); // read-only access to everything

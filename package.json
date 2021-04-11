@@ -31,6 +31,7 @@
   },
   "private": true,
   "dependencies": {
+    "@casl/ability": "^5.2.2",
     "@chaunceyau/react-components": "^0.2.10",
     "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^7.0.0",
