@@ -23,10 +23,10 @@ export class CaslAbilityFactory {
     console.log("CaslAbilityFactory")
 
     if (!user) {
+      can(Action.Read, User); // read-only access to everything
     } else if (user.id === '4003k430') {
       can(Action.Manage, 'all'); // read-write access to everything
     } else {
-      can(Action.Read, 'all'); // read-only access to everything
     }
 
     // can(Action.Update, Article, { authorId: user.id });

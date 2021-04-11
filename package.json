@@ -27,7 +27,10 @@
     "prepare": "husky install",
     "api:watch": "nx serve api-starter",
     "client:watch": "nx serve client-starter",
-    "prisma:generate": "prisma generate --schema ./apps/api-starter/schema.prisma"
+    "prisma:generate": "prisma generate --schema ./apps/api-starter/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema ./apps/api-starter/prisma/schema.prisma",
+    "prisma:reset": "prisma migrate reset"
+
   },
   "private": true,
   "dependencies": {
@@ -43,7 +46,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@prisma/client": "^2.20.1",
     "apollo-server-express": "^2.13.1",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.1",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "connect-redis": "^4.0.4",
