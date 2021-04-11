@@ -1,11 +1,15 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import * as Joi from '@hapi/joi'
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
 //
-import { LocalConfigService } from './config.service'
-import common from './namespaces/common'
-import cookies from './namespaces/cookies'
-import stripe from './namespaces/stripe'
+import common from './namespaces/common';
+import cookies from './namespaces/cookies';
+import stripe from './namespaces/stripe';
+// 
+import { GlobalConfigService } from './services/global.config';
+import { CookiesConfigService } from './services/cookies.config';
+import { SentryConfigService } from './services/sentry.config';
+import { StripeConfigService } from './services/stripe.config';
 
 @Module({
   imports: [
@@ -34,7 +38,17 @@ import stripe from './namespaces/stripe'
       }),
     }),
   ],
-  providers: [LocalConfigService],
-  exports: [LocalConfigService],
+  providers: [
+    CookiesConfigService,
+    GlobalConfigService,
+    SentryConfigService,
+    StripeConfigService,
+  ],
+  exports: [
+    CookiesConfigService,
+    GlobalConfigService,
+    SentryConfigService,
+    StripeConfigService,
+  ],
 })
 export class LocalConfigModule {}

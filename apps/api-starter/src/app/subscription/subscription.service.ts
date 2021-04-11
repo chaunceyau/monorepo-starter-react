@@ -1,14 +1,14 @@
-import Stripe from 'stripe'
-import { Injectable } from '@nestjs/common'
-import { InjectStripe } from 'nestjs-stripe'
+import Stripe from 'stripe';
+import { Injectable } from '@nestjs/common';
+import { InjectStripe } from 'nestjs-stripe';
 //
-import { PremiumPlanType } from './models/create-subscription.input'
-import { LocalConfigService } from '../config/config.service'
+import { PremiumPlanType } from './models/create-subscription.input';
+import { StripeConfigService } from '../config/services/stripe.config';
 
 @Injectable()
 export class SubscriptionService {
   constructor(
-    private readonly localConfigService: LocalConfigService,
+    private readonly stripeConfigService: StripeConfigService,
     @InjectStripe() private readonly stripeClient: Stripe
   ) {}
 
@@ -17,25 +17,25 @@ export class SubscriptionService {
     price_id,
   }: CreateCheckoutSession) {
     const session = this.stripeClient.checkout.sessions.create({
-      success_url: this.localConfigService.checkoutSuccessRedirectURL,
-      cancel_url: this.localConfigService.checkoutCancelRedirectURL,
+      success_url: this.stripeConfigService.checkoutSuccessRedirectURL,
+      cancel_url: this.stripeConfigService.checkoutCancelRedirectURL,
       payment_method_types: ['card'],
       mode: 'subscription',
       customer: customer_id,
       line_items: [{ price: price_id, quantity: 1 }],
       // expand: ['latest_invoice.payment_intent'],
-    })
+    });
 
-    return session
+    return session;
   }
 
   async createBillingPortalSession({ customer_id }) {
     const session = await this.stripeClient.billingPortal.sessions.create({
       customer: customer_id,
-      return_url: this.localConfigService.billingPortalRedirectURL,
-    })
+      return_url: this.stripeConfigService.billingPortalRedirectURL,
+    });
 
-    return session.url
+    return session.url;
   }
 
   async createSubscription({ payment_method_id, customer_id, price_id }) {
@@ -43,9 +43,9 @@ export class SubscriptionService {
     try {
       await this.stripeClient.paymentMethods.attach(payment_method_id, {
         customer: customer_id,
-      })
+      });
     } catch (error) {
-      throw new Error('Failed to attach payment method.')
+      throw new Error('Failed to attach payment method.');
       // return res.status('402').send({ error: { message: error.message } })
     }
     // Change the default invoice settings on the customer to the new payment method
@@ -53,25 +53,25 @@ export class SubscriptionService {
       invoice_settings: {
         default_payment_method: payment_method_id,
       },
-    })
+    });
     // Create the subscription
     const subscription = await this.stripeClient.subscriptions.create({
       customer: customer_id,
       items: [{ price: price_id }],
       expand: ['latest_invoice.payment_intent'],
-    })
-    return subscription
+    });
+    return subscription;
   }
 
   getPriceIdForPremiumPlan(plan: PremiumPlanType) {
     if (plan.toString() === 'PREMIUM_MONTHLY')
-      return this.localConfigService.monthlySubscriptionPriceId
+      return this.stripeConfigService.monthlySubscriptionPriceId;
     else if (plan.toString() === 'PREMIUM_ANNUAL')
-      return this.localConfigService.annualSubscriptionPriceId
+      return this.stripeConfigService.annualSubscriptionPriceId;
   }
 }
 
 interface CreateCheckoutSession {
-  customer_id: string
-  price_id: string
+  customer_id: string;
+  price_id: string;
 }

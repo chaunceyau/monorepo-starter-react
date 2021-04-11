@@ -1,53 +1,51 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
-import { UseGuards, Response } from '@nestjs/common'
-import { GraphQLError } from 'graphql'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 //
-import { stripeDateToISO } from '../common/utils'
 import {
   CreateSubscriptionInput,
   CreateSubscriptionResponse,
   PremiumPlanType,
-} from './models/create-subscription.input'
+} from './models/create-subscription.input';
 import {
   GraphQLUser,
   ResponseObjectUser,
-} from '../common/decorators/user.decorator'
-import { PrismaService } from '../prisma/prisma.service'
-import { SubscriptionService } from './subscription.service'
-import { GraphQLAuthenticatedGuard } from '../common/guards/authenticated.guard'
-import { LocalConfigService } from '../config/config.service'
+} from '../common/decorators/user.decorator';
+import { PrismaService } from '../prisma/prisma.service';
+import { SubscriptionService } from './subscription.service';
+import { StripeConfigService } from '../config/services/stripe.config';
+import { GraphQLAuthenticatedGuard } from '../common/guards/authenticated.guard';
 
 @Resolver('Subscription')
 export class SubscriptionResolver {
   constructor(
     private prisma: PrismaService,
     private subscriptionService: SubscriptionService,
-    private localConfigService: LocalConfigService
+    private stripeConfigService: StripeConfigService
   ) {}
 
   price_id = (frequency: PremiumPlanType): string => {
     if (frequency === 'PREMIUM_MONTHLY') {
-      return this.localConfigService.monthlySubscriptionPriceId
+      return this.stripeConfigService.monthlySubscriptionPriceId;
     } else if (frequency === 'PREMIUM_ANNUAL') {
-      return this.localConfigService.annualSubscriptionPriceId
+      return this.stripeConfigService.annualSubscriptionPriceId;
     }
-  }
+  };
 
   @UseGuards(GraphQLAuthenticatedGuard)
-  @Query(_returns => String)
+  @Query((_returns) => String)
   async getBillingPortalSessionURL(@GraphQLUser() user: ResponseObjectUser) {
     const db_user = await this.prisma.user.findUnique({
       where: { id: user.id },
-    })
+    });
     const url = await this.subscriptionService.createBillingPortalSession({
       customer_id: db_user.stripe_customer_id,
-    })
+    });
 
-    return url
+    return url;
   }
 
   @UseGuards(GraphQLAuthenticatedGuard)
-  @Mutation(_returns => CreateSubscriptionResponse)
+  @Mutation((_returns) => CreateSubscriptionResponse)
   async createCheckoutSession(
     @Args('input') input: CreateSubscriptionInput,
     @GraphQLUser() user: ResponseObjectUser
@@ -55,10 +53,10 @@ export class SubscriptionResolver {
     const session = await this.subscriptionService.createCheckoutSession({
       customer_id: user.stripe_customer_id,
       price_id: this.price_id(input.plan),
-    })
+    });
     return {
       id: session.id,
-    }
+    };
   }
 
   // @UseGuards(GraphQLAuthenticatedGuard)
