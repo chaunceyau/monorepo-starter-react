@@ -5,6 +5,18 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import '../index.css';
 import { LoginPage } from '../pages/auth/login';
+import { RegistrationPage } from '../pages/auth/register';
+
+const BASE_ROUTES = [
+  {
+    path: '/auth/login',
+    component: LoginPage
+  },
+  {
+    path: '/auth/register',
+    component: RegistrationPage
+  }
+]
 
 export function App() {
   return (
@@ -12,6 +24,9 @@ export function App() {
       <Switch>
         <Route path="/auth/login">
           <LoginPage />
+        </Route>
+        <Route path="/auth/register">
+          <RegistrationPage />
         </Route>
       </Switch>
       <MultiNavLayout

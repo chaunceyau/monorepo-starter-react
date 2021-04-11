@@ -2,7 +2,6 @@ import {
   Controller,
   Post,
   Request,
-  Response,
   Get,
   UseGuards,
   Body,
@@ -20,8 +19,8 @@ export class AuthController {
   constructor(
     private userService: UserService,
     private accountService: AccountService
-  ) {}
-  
+  ) { }
+
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {

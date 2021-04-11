@@ -2,7 +2,6 @@ import {
   Injectable,
   BadRequestException,
   UnauthorizedException,
-  InternalServerErrorException,
 } from '@nestjs/common'
 import { InjectStripe } from 'nestjs-stripe'
 import { genSalt, hash } from 'bcrypt'
@@ -17,20 +16,21 @@ export class AccountService {
   constructor(
     private prisma: PrismaService,
     @InjectStripe() private readonly stripeClient: Stripe
-  ) {}
+  ) { }
 
   async createAccount(username: string, password: string): Promise<User> {
     if (!username || !password)
       throw new Error('You must provide username & password')
 
-    const stripe_user = await this.stripeClient.customers.create({
-      email: username,
-    })
+    // const stripe_user = await this.stripeClient.customers.create({
+    //   email: username,
+    // })
 
-    if (!stripe_user)
-      throw new InternalServerErrorException(
-        'Failed creating account during stripe linking.'
-      )
+    // if (!stripe_user) {
+    //   throw new InternalServerErrorException(
+    //     'Failed creating account during stripe linking.'
+    //   )
+    // }
 
     const { salt, password: hashedPassword } = await this.hashPassword(password)
     try {
@@ -45,7 +45,7 @@ export class AccountService {
           username,
           password: hashedPassword,
           subscription_type: 'FREE_TIER',
-          stripe_customer_id: stripe_user.id,
+          // stripe_customer_id: stripe_user.id,
         },
       })
       return result

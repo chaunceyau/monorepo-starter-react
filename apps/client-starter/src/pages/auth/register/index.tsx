@@ -1,32 +1,28 @@
 import React from 'react';
-import { RememberMyLoginInput } from './remember-me';
-import { SocialOptions } from './social-options';
 
-const INCLUDE_SOCIAL_PROVIDERS = false;
+interface RegistrationReducerState extends EmailPasswordRegistrationFields { }
 
-interface LoginReducerState extends EmailPasswordLogin { }
-
-interface EmailPasswordLogin {
+interface EmailPasswordRegistrationFields {
   email: string
   password: string
 }
 
-enum LoginReducerActions {
+enum RegistrationReducerActions {
   UPDATE_EMAIL = 'UPDATE_EMAIL',
   UPDATE_PASSWORD = 'UPDATE_PASSWORD'
 }
 
-const loginReducerMap = (state: LoginReducerState, action: { type: LoginReducerActions, payload: any }): Record<LoginReducerActions, LoginReducerState> => ({
-  [LoginReducerActions.UPDATE_EMAIL]: Object.assign({}, state, { email: action.payload }),
-  [LoginReducerActions.UPDATE_PASSWORD]: Object.assign({}, state, { password: action.payload }),
+const registrationReducerMap = (state: RegistrationReducerState, action: { type: RegistrationReducerActions, payload: any }): Record<RegistrationReducerActions, RegistrationReducerState> => ({
+  [RegistrationReducerActions.UPDATE_EMAIL]: Object.assign({}, state, { email: action.payload }),
+  [RegistrationReducerActions.UPDATE_PASSWORD]: Object.assign({}, state, { password: action.payload }),
 })
 
-function loginReducer(state: LoginReducerState, action: { type: LoginReducerActions, payload: any }) {
-  return loginReducerMap(state, action)[action.type]
+function registrationReducer(state: RegistrationReducerState, action: { type: RegistrationReducerActions, payload: any }) {
+  return registrationReducerMap(state, action)[action.type]
 }
 
-export function LoginPage(props) {
-  const [state, dispatch] = React.useReducer(loginReducer, { email: '', password: '' })
+export function RegistrationPage(props) {
+  const [state, dispatch] = React.useReducer(registrationReducer, { email: '', password: '' })
   return (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-24 xl:px-32">
@@ -38,33 +34,26 @@ export function LoginPage(props) {
               alt="Workflow"
             />
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Sign in to your account
+              Create an account
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w">
-              Or
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                start your 14-day free trial
-              </a>
+              Get started using {process.env.APPLICATION_NAME}
             </p>
           </div>
 
           <div className="mt-8">
-            {INCLUDE_SOCIAL_PROVIDERS && <SocialOptions />}
             <div className="mt-6">
               <form
                 className="space-y-6"
                 onSubmit={e => {
                   e.preventDefault()
-                  fetch(`http://localhost:5000/api/auth/login`, {
+                  fetch(`http://localhost:5000/api/auth/register`, {
                     method: "POST",
                     headers: {
                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                      email: state.email,
+                      username: state.email,
                       password: state.password,
                     })
                   })
@@ -87,7 +76,7 @@ export function LoginPage(props) {
                       autoComplete="email"
                       required
                       value={state.email}
-                      onChange={e => dispatch({ type: LoginReducerActions.UPDATE_EMAIL, payload: e.target.value })}
+                      onChange={e => dispatch({ type: RegistrationReducerActions.UPDATE_EMAIL, payload: e.target.value })}
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
@@ -108,19 +97,18 @@ export function LoginPage(props) {
                       autoComplete="current-password"
                       required
                       value={state.password}
-                      onChange={e => dispatch({ type: LoginReducerActions.UPDATE_PASSWORD, payload: e.target.value })}
+                      onChange={e => dispatch({ type: RegistrationReducerActions.UPDATE_PASSWORD, payload: e.target.value })}
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
-                {/* <RememberMyLoginInput /> */}
                 <div>
                   <button
                     type="submit"
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Sign in
+                    Create account
                   </button>
                 </div>
               </form>
