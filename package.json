@@ -30,7 +30,7 @@
   },
   "private": true,
   "dependencies": {
-    "@chaunceyau/react-components": "^0.2.5",
+    "@chaunceyau/react-components": "^0.2.10",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
@@ -42,7 +42,8 @@
     "react-router-dom": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "twin.macro": "^2.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
