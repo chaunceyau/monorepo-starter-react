@@ -11,9 +11,11 @@ import { AccountModule } from './account/account.module'
 import { LocalConfigModule } from './config/config.module'
 import { LocalConfigService } from './config/config.service'
 import { SubscriptionModule } from './subscription/subscription.module'
+import { CaslModule } from './casl/casl.module'
 @Module({
   imports: [
     AuthModule,
+    CaslModule,
     UserModule,
     PrismaModule,
     AccountModule,

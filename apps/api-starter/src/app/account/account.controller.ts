@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body, Response } from '@nestjs/common'
+import { Controller, Post, UseGuards, Body, Response, Get } from '@nestjs/common'
 //
 import { AccountService } from './account.service'
 import { PrismaService } from '../prisma/prisma.service'
@@ -8,6 +8,9 @@ import {
   ResponseObjectUser,
 } from '../common/decorators/user.decorator'
 import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { Action, CheckPolicies } from '../casl/policy-types'
+import { AppAbility } from '../casl/casl-ability.factory'
+import { User } from '../user/models/user.model'
 
 @Controller('account')
 export class AccountController {
@@ -15,6 +18,10 @@ export class AccountController {
     private accountService: AccountService,
     private prisma: PrismaService
   ) {}
+
+  @Get('/hm')
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, User))
+
 
   @UseGuards(RESTAuthenticatedGuard)
   @Post('changepass')
