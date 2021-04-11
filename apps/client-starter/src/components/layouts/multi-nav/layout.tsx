@@ -1,6 +1,7 @@
 import React from 'react';
 import { FullPageLoading } from '../../loading/full-page';
 import { Link, SidebarMenu } from './menu';
+import { Switch, Route } from 'react-router-dom';
 
 interface MultiNavLayoutProps {
   sidebarLinks: Array<Link>;
@@ -23,14 +24,19 @@ export function MultiNavLayout(props: MultiNavLayoutProps) {
         {/* <!-- Narrow sidebar--> */}
         <SidebarNavigation links={props.sidebarLinks} />
         <main className="min-w-0 flex-1 border-t border-gray-200 lg:flex p-4">
-          {renderMainContent(!!props.loading, !!props.error, match.component)}
+          <Switch>
+            {props.sidebarLinks.map((link) => (
+              <Route path={link.to}>{link.component}</Route>
+            ))}
+          </Switch>
+          {/* {renderMainContent(match.component, !!props.loading, !!props.error)} */}
         </main>
       </div>
     </div>
   );
 }
 
-function renderMainContent(loading, error, component) {
+function renderMainContent(component, loading, error) {
   if (loading) return <FullPageLoading />;
   if (error) return <span>error loading</span>;
   return component;
