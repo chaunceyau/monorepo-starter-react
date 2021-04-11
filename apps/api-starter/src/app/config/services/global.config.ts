@@ -27,7 +27,5 @@ export class GlobalConfigService {
   /**
    * @returns e.g. http://localhost:3000
    */
-  private get frontendURL() {
-    return this.configService.get('common.FRONTEND_URL');
-  }
+  private frontendURL = this.configService.get('common.FRONTEND_URL');
 }
