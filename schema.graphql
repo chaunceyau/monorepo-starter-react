@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  subscription_type: SubscriptionType!
+}
+
+"""Type of subscription account is associated with."""
+enum SubscriptionType {
+  FREE_TIER
+  PREMIUM_SUBSCRIBER
+  ENTERPRISE_SUBSCRIBER
+}
+
+type CreateSubscriptionResponse {
+  id: String!
+}
+
+type Query {
+  user(id: String!): User!
+  currentUser: User!
+  getBillingPortalSessionURL: String!
+}
+
+type Mutation {
+  createCheckoutSession(input: CreateSubscriptionInput!): CreateSubscriptionResponse!
+}
+
+input CreateSubscriptionInput {
+  plan: SubscriptionPlan!
+}
+
+enum SubscriptionPlan {
+  PREMIUM_MONTHLY
+  PREMIUM_ANNUAL
+}
