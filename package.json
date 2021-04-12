@@ -55,7 +55,7 @@
     "core-js": "^3.10.1",
     "csurf": "^1.11.0",
     "cuid": "^2.1.8",
-    "document-register-element": "1.13.1",
+    "document-register-element": "1.14.10",
     "express-session": "^1.17.1",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
