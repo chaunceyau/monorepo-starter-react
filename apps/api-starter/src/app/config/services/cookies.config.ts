@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { GlobalConfigService } from './global.config';
 
 @Injectable()
 export class CookiesConfigService {
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService, private globalConfigService: GlobalConfigService) { }
 
   /**
    * @returns randomly generated string
@@ -23,16 +24,17 @@ export class CookiesConfigService {
    *
    */
   get cookieOptions() {
-    const inDevelopment =
-      this.configService.get('common.NODE_ENV').toLowerCase() !== 'production';
-
-    if (inDevelopment)
+    if (this.globalConfigService.inDevelopment) {
+      console.log("here1")
       return {
         secure: false,
         httpOnly: false,
+        domain: 'localhost',
         maxAge: this.cookieMaxAge,
       };
-
+    }
+    
+    console.log("here2")
     return {
       secure: true,
       httpOnly: true,

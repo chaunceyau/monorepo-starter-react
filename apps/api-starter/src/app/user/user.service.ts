@@ -8,9 +8,9 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   // potentially dangerous - shows existence of an account...
-  async findByUsername(username: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.prisma.user.findUnique({
-      where: { username },
+      where: { email },
     })
     if (!user) throw new NotFoundException()
     const { password, salt, ...result } = user

@@ -4,9 +4,9 @@ CREATE TYPE "SubscriptionType" AS ENUM ('FREE_TIER', 'PREMIUM_SUBSCRIBER', 'ENTE
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "salt" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "salt" TEXT NOT NULL,
     "subscription_type" "SubscriptionType",
     "stripe_customer_id" TEXT,
     "stripe_subscription_id" TEXT,
@@ -16,7 +16,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User.username_unique" ON "User"("username");
+CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.stripe_customer_id_unique" ON "User"("stripe_customer_id");

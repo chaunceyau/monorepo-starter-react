@@ -4,7 +4,7 @@ import { SubscriptionType } from '@prisma/client'
 @ObjectType()
 export class User {
   id: string
-  username: string
+  email: string
   @Field(_type => SubscriptionType)
   subscription_type: SubscriptionType
 }

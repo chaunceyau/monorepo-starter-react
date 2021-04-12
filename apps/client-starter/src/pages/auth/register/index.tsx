@@ -53,7 +53,7 @@ export function RegistrationPage(props) {
                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                      username: state.email,
+                      email: state.email,
                       password: state.password,
                     })
                   })

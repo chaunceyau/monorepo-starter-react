@@ -7,7 +7,7 @@ async function main() {
       id: "1",
       salt: "0",
       password: "pass",
-      username: "alice"
+      email: "alice"
     }
   });
 

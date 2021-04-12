@@ -3,7 +3,7 @@ import { Controller, Response, Get, UseGuards } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { SubscriptionService } from './subscription.service'
 import { RESTUser } from '../common/decorators/user.decorator'
-import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 
 @Controller('subscription')
 export class SubscriptionController {
@@ -12,7 +12,7 @@ export class SubscriptionController {
     private readonly subscriptionService: SubscriptionService
   ) {}
 
-  @UseGuards(RESTAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Get()
   async redirectToBillingPortalSession(@RESTUser() user, @Response() res) {
     const db_user = await this.prisma.user.findUnique({

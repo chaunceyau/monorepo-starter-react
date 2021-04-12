@@ -7,7 +7,7 @@ import { User } from './models/user.model'
 import { UserService } from './user.service'
 import { GraphQLUser } from '../common/decorators/user.decorator'
 import { CreatePaymentInput } from './models/create-payment.input'
-import { GraphQLAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 
 @Resolver(_of => User)
 export class UserResolver {
@@ -16,13 +16,13 @@ export class UserResolver {
     @InjectStripe() private readonly stripeClient: Stripe
   ) {}
 
-  @UseGuards(GraphQLAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Query(_returns => User)
   async user(@Args('id') id: string) {
     return this.userService.findUniqueById(id)
   }
 
-  @UseGuards(GraphQLAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Query(_returns => User)
   async currentUser(@GraphQLUser() user) {
     try {
@@ -34,7 +34,7 @@ export class UserResolver {
   }
 
   // @Mutation(_returns => String)
-  // @UseGuards(GraphQLAuthenticatedGuard)
+  // @UseGuards(AuthenticatedGuard)
   // async createPaymentMethod(
   //   @GraphQLUser() user,
   //   @Args('input') input: CreatePaymentInput

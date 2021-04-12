@@ -10,6 +10,7 @@ import * as cuid from 'cuid'
 //
 import { PrismaService } from '../prisma/prisma.service'
 import { User } from '../user/models/user.model'
+import { SubscriptionType } from '@prisma/client'
 
 @Injectable()
 export class AccountService {
@@ -18,12 +19,12 @@ export class AccountService {
     @InjectStripe() private readonly stripeClient: Stripe
   ) { }
 
-  async createAccount(username: string, password: string): Promise<User> {
-    if (!username || !password)
-      throw new Error('You must provide username & password')
+  async createAccount(email: string, password: string): Promise<User> {
+    if (!email || !password)
+      throw new Error('You must provide email & password')
 
     // const stripe_user = await this.stripeClient.customers.create({
-    //   email: username,
+    //   email: email,
     // })
 
     // if (!stripe_user) {
@@ -42,9 +43,9 @@ export class AccountService {
         data: {
           id: cuid(),
           salt,
-          username,
+          email,
           password: hashedPassword,
-          subscription_type: 'FREE_TIER',
+          subscription_type: SubscriptionType.FREE_TIER,
           // stripe_customer_id: stripe_user.id,
         },
       })

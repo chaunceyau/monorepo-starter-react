@@ -4,7 +4,7 @@ import { GqlExecutionContext } from '@nestjs/graphql'
 // note: decorators not enforcing type safety on decorators...
 export interface ResponseObjectUser {
   id: string
-  username: string
+  email: string
   subscription_type?: SubscriptionType
   stripe_customer_id?: string
   stripe_subscription_id?: string

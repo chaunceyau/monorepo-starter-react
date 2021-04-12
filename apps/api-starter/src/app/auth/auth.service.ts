@@ -8,18 +8,17 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private accountService: AccountService
-  ) {}
+  ) { }
 
   /**
    *
-   * @param username user's email address
+   * @param email user's email address
    * @param rawPassword provided plaintext/unhashed password
    */
-  async validateUser(username: string, rawPassword: string): Promise<any> {
-    const user = await this.prisma.user.findUnique({ where: { username } })
-    
-    if (!user) throw new UnauthorizedException()
+  async validateUser(email: string, rawPassword: string): Promise<any> {
+    const user = await this.prisma.user.findUnique({ where: { email } })
 
+    if (!user) throw new UnauthorizedException()
     const { password, salt, ...result } = user
     const { password: hashedPassword } = await this.accountService.hashPassword(
       rawPassword,

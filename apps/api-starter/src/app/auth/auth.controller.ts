@@ -9,10 +9,11 @@ import {
 //
 import { User } from '../user/models/user.model'
 import { UserService } from '../user/user.service'
-import { LoginGuard } from '../common/guards/login.guard'
 import { AccountService } from '../account/account.service'
 import { CreateAccountDTO } from '../account/dto/create-account.dto'
-import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
+import * as passport from 'passport'
+import { LocalAuthGuard } from '../common/guards/login.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -21,23 +22,28 @@ export class AuthController {
     private accountService: AccountService
   ) { }
 
-  @UseGuards(RESTAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {
+    // console.log('req->user', req)
+    // console.log('req.cookies', req.cookies)
+    // console.log('req.cookies', req.signedCookies)
     return this.userService.findUniqueById(req.user.id)
   }
 
-  @UseGuards(LoginGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
+  // , @Res({ passthrough: true }) res: Response
   login() {
-    return { success: true }
+    // return req.user
+    return passport.authenticate('local', { failureRedirect: '/lofodso', successRedirect: 'google.com' },)
   }
 
   @Post('register')
   async register(
-    @Body() { username, password }: CreateAccountDTO
+    @Body() { email, password }: CreateAccountDTO
   ): Promise<User> {
-    return this.accountService.createAccount(username, password)
+    return await this.accountService.createAccount(email, password)
   }
 
   @Post('logout')

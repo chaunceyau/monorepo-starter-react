@@ -41,12 +41,12 @@ export function LoginPage(props) {
               Sign in to your account
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w">
-              Or
+              New to the site?{" "}
               <a
                 href="#"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                start your 14-day free trial
+                Create a new account
               </a>
             </p>
           </div>
@@ -58,18 +58,22 @@ export function LoginPage(props) {
                 className="space-y-6"
                 onSubmit={e => {
                   e.preventDefault()
-                  fetch(`http://localhost:5000/api/auth/login`, {
-                    method: "POST",
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                      email: state.email,
-                      password: state.password,
-                    })
-                  })
-                  console.log(state.email)
-                  console.log(state.password)
+                  const myHeaders = new Headers();
+                  myHeaders.append("Content-Type", "application/json");
+
+                  const raw = JSON.stringify({
+                    "email": "demo@test.com",
+                    "password": "password"
+                  });
+
+                  const requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                  };
+
+                  fetch(`http://localhost:5000/api/auth/login`, requestOptions as any)
                 }}
               >
                 <div>

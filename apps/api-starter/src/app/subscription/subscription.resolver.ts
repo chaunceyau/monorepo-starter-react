@@ -13,7 +13,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { SubscriptionService } from './subscription.service';
 import { StripeConfigService } from '../config/services/stripe.config';
-import { GraphQLAuthenticatedGuard } from '../common/guards/authenticated.guard';
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard';
 
 @Resolver('Subscription')
 export class SubscriptionResolver {
@@ -31,7 +31,7 @@ export class SubscriptionResolver {
     }
   };
 
-  @UseGuards(GraphQLAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Query((_returns) => String)
   async getBillingPortalSessionURL(@GraphQLUser() user: ResponseObjectUser) {
     const db_user = await this.prisma.user.findUnique({
@@ -44,7 +44,7 @@ export class SubscriptionResolver {
     return url;
   }
 
-  @UseGuards(GraphQLAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Mutation((_returns) => CreateSubscriptionResponse)
   async createCheckoutSession(
     @Args('input') input: CreateSubscriptionInput,
@@ -59,7 +59,7 @@ export class SubscriptionResolver {
     };
   }
 
-  // @UseGuards(GraphQLAuthenticatedGuard)
+  // @UseGuards(AuthenticatedGuard)
   // @Mutation(_returns => CreateSubscriptionResponse)
   // async upgradeToPremium(
   //   @Args('input') { plan }: CreateSubscriptionInput,

@@ -7,7 +7,7 @@ import {
   RESTUser,
   ResponseObjectUser,
 } from '../common/decorators/user.decorator'
-import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { Action, CheckPolicies } from '../casl/policy-types'
 import { AppAbility } from '../casl/casl-ability.factory'
 import { User } from '../user/models/user.model'
@@ -28,7 +28,7 @@ export class AccountController {
   }
 
 
-  @UseGuards(RESTAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   @Post('changepass')
   async changePassword(
     @Body() body: UpdatePasswordDTO,
