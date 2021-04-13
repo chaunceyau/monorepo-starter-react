@@ -1,32 +1,47 @@
+import { useAuth } from 'apps/client-starter/src/hooks/useAuth';
 import React from 'react';
 import { RememberMyLoginInput } from './remember-me';
 import { SocialOptions } from './social-options';
 
 const INCLUDE_SOCIAL_PROVIDERS = false;
 
-interface LoginReducerState extends EmailPasswordLogin { }
+interface LoginReducerState extends EmailPasswordLogin {}
 
 interface EmailPasswordLogin {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 enum LoginReducerActions {
   UPDATE_EMAIL = 'UPDATE_EMAIL',
-  UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+  UPDATE_PASSWORD = 'UPDATE_PASSWORD',
 }
 
-const loginReducerMap = (state: LoginReducerState, action: { type: LoginReducerActions, payload: any }): Record<LoginReducerActions, LoginReducerState> => ({
-  [LoginReducerActions.UPDATE_EMAIL]: Object.assign({}, state, { email: action.payload }),
-  [LoginReducerActions.UPDATE_PASSWORD]: Object.assign({}, state, { password: action.payload }),
-})
+const loginReducerMap = (
+  state: LoginReducerState,
+  action: { type: LoginReducerActions; payload: any }
+): Record<LoginReducerActions, LoginReducerState> => ({
+  [LoginReducerActions.UPDATE_EMAIL]: Object.assign({}, state, {
+    email: action.payload,
+  }),
+  [LoginReducerActions.UPDATE_PASSWORD]: Object.assign({}, state, {
+    password: action.payload,
+  }),
+});
 
-function loginReducer(state: LoginReducerState, action: { type: LoginReducerActions, payload: any }) {
-  return loginReducerMap(state, action)[action.type]
+function loginReducer(
+  state: LoginReducerState,
+  action: { type: LoginReducerActions; payload: any }
+) {
+  return loginReducerMap(state, action)[action.type];
 }
 
 export function LoginPage(props) {
-  const [state, dispatch] = React.useReducer(loginReducer, { email: '', password: '' })
+  const [state, dispatch] = React.useReducer(loginReducer, {
+    email: '',
+    password: '',
+  });
+  // console.log({ user });
   return (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-24 xl:px-32">
@@ -41,7 +56,7 @@ export function LoginPage(props) {
               Sign in to your account
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w">
-              New to the site?{" "}
+              New to the site?{' '}
               <a
                 href="#"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -56,24 +71,24 @@ export function LoginPage(props) {
             <div className="mt-6">
               <form
                 className="space-y-6"
-                onSubmit={e => {
-                  e.preventDefault()
+                onSubmit={(e) => {
+                  e.preventDefault();
                   const myHeaders = new Headers();
-                  myHeaders.append("Content-Type", "application/json");
+                  myHeaders.append('Content-Type', 'application/json');
 
                   const raw = JSON.stringify({
-                    "email": "demo@test.com",
-                    "password": "password"
+                    email: 'demo@test.com',
+                    password: 'password',
                   });
 
                   const requestOptions = {
                     method: 'POST',
                     headers: myHeaders,
                     body: raw,
-                    redirect: 'follow'
+                    redirect: 'follow',
                   };
 
-                  fetch(`http://localhost:5000/api/auth/login`, requestOptions as any)
+                  fetch(`/api/auth/login`, requestOptions as any);
                 }}
               >
                 <div>
@@ -91,7 +106,12 @@ export function LoginPage(props) {
                       autoComplete="email"
                       required
                       value={state.email}
-                      onChange={e => dispatch({ type: LoginReducerActions.UPDATE_EMAIL, payload: e.target.value })}
+                      onChange={(e) =>
+                        dispatch({
+                          type: LoginReducerActions.UPDATE_EMAIL,
+                          payload: e.target.value,
+                        })
+                      }
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
@@ -112,7 +132,12 @@ export function LoginPage(props) {
                       autoComplete="current-password"
                       required
                       value={state.password}
-                      onChange={e => dispatch({ type: LoginReducerActions.UPDATE_PASSWORD, payload: e.target.value })}
+                      onChange={(e) =>
+                        dispatch({
+                          type: LoginReducerActions.UPDATE_PASSWORD,
+                          payload: e.target.value,
+                        })
+                      }
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>

@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common'
-import { PassportModule } from '@nestjs/passport'
+import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 //
-import { AuthService } from './auth.service'
-import { LocalStrategy } from './util/local.strategy'
-import { UserModule } from '../user/user.module'
-import { AuthController } from './auth.controller'
-import { SessionSerializer } from './util/session.serializer'
-import { PrismaModule } from '../prisma/prisma.module'
-import { AccountService } from '../account/account.service'
+import { AuthService } from './auth.service';
+import { UserModule } from '../user/user.module';
+import { AuthController } from './auth.controller';
+import { LocalStrategy } from './util/local.strategy';
+import { PrismaModule } from '../prisma/prisma.module';
+import { AccountService } from '../account/account.service';
+import { SessionSerializer } from './util/session.serializer';
 
 @Module({
   imports: [

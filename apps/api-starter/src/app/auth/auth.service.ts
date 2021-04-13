@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 //
-import { PrismaService } from '../prisma/prisma.service'
-import { AccountService } from '../account/account.service'
+import { PrismaService } from '../prisma/prisma.service';
+import { AccountService } from '../account/account.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private accountService: AccountService
-  ) { }
+  ) {}
 
   /**
    *
@@ -16,15 +16,18 @@ export class AuthService {
    * @param rawPassword provided plaintext/unhashed password
    */
   async validateUser(email: string, rawPassword: string): Promise<any> {
-    const user = await this.prisma.user.findUnique({ where: { email } })
+    const user = await this.prisma.user.findUnique({ where: { email } });
 
-    if (!user) throw new UnauthorizedException()
-    const { password, salt, ...result } = user
+    if (!user) throw new UnauthorizedException();
+    const { password, salt, ...result } = user;
     const { password: hashedPassword } = await this.accountService.hashPassword(
       rawPassword,
       salt
-    )
-    
-    return password === hashedPassword ? result : null
+    );
+
+    console.log('password === hashedPassword ? result : null');
+    console.log(password === hashedPassword ? result : null);
+
+    return password === hashedPassword ? result : null;
   }
 }

@@ -52,6 +52,7 @@
     "class-validator": "^0.13.1",
     "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
     "core-js": "^3.10.1",
     "csurf": "^1.11.0",
     "cuid": "^2.1.8",
