@@ -1,32 +1,28 @@
-import { Controller, Post, UseGuards, Body, Get } from '@nestjs/common'
+import { Controller, Post, UseGuards, Body, Get } from '@nestjs/common';
 //
-import { AccountService } from './account.service'
-import { PrismaService } from '../prisma/prisma.service'
-import { UpdatePasswordDTO } from './dto/update-password.dto'
+import { User } from '../user/models/user.model';
+import { AccountService } from './account.service';
+import { PoliciesGuard } from '../casl/policy-guard';
+import { RbacAbility } from '../casl/casl-ability.factory';
+import { Action, CheckPolicies } from '../casl/policy-types';
+import { UpdatePasswordDTO } from './dto/update-password.dto';
 import {
   RESTUser,
   ResponseObjectUser,
-} from '../common/decorators/user.decorator'
-import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
-import { Action, CheckPolicies } from '../casl/policy-types'
-import { AppAbility } from '../casl/casl-ability.factory'
-import { User } from '../user/models/user.model'
-import { PoliciesGuard } from '../casl/policy-guard'
+} from '../common/decorators/user.decorator';
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard';
 
 @Controller('account')
 export class AccountController {
-  constructor(
-    private accountService: AccountService,
-    private prisma: PrismaService
-  ) { }
+  constructor(private accountService: AccountService) {}
 
   @Get('hm')
   @UseGuards(PoliciesGuard)
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, User))
+  // note - can't pass more here
+  @CheckPolicies((ability: RbacAbility) => ability.can(Action.Read, User))
   fdafds() {
-    return "fldmsalfmd"
+    return 'fldmsalfmd';
   }
-
 
   @UseGuards(AuthenticatedGuard)
   @Post('changepass')
@@ -38,6 +34,6 @@ export class AccountController {
       user.id,
       body.oldPassword,
       body.newPassword
-    )
+    );
   }
 }

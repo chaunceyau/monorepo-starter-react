@@ -1,14 +1,14 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { AppAbility, CaslAbilityFactory } from "./casl-ability.factory";
-import { CHECK_POLICIES_KEY, PolicyHandler } from "./policy-types";
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { RbacAbility, CaslAbilityFactory } from './casl-ability.factory';
+import { CHECK_POLICIES_KEY, PolicyHandler } from './policy-types';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private caslAbilityFactory: CaslAbilityFactory
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const policyHandlers =
@@ -18,14 +18,16 @@ export class PoliciesGuard implements CanActivate {
       ) || [];
 
     const { user } = context.switchToHttp().getRequest();
+    const req = context.switchToHttp().getRequest();
+    // TODO: potentially pass variables here - req.body.variables
     const ability = this.caslAbilityFactory.createForUser(user);
-
+    console.log(req.body.variables);
     return policyHandlers.every((handler) =>
       this.execPolicyHandler(handler, ability)
     );
   }
 
-  private execPolicyHandler(handler: PolicyHandler, ability: AppAbility) {
+  private execPolicyHandler(handler: PolicyHandler, ability: RbacAbility) {
     if (typeof handler === 'function') {
       return handler(ability);
     }

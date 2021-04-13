@@ -1,7 +1,8 @@
 import React from 'react';
-import { FullPageLoading } from '../../loading/full-page';
-import { Link, SidebarMenu } from './menu';
 import { Switch, Route } from 'react-router-dom';
+// 
+import { Link, SidebarMenu } from './menu';
+import { FullPageLoading } from '../../loading/full-page';
 
 interface MultiNavLayoutProps {
   sidebarLinks: Array<Link>;
