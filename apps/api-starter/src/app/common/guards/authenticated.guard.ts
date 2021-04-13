@@ -5,6 +5,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.get<boolean>(
       'isPublic',
@@ -15,7 +16,6 @@ export class AuthenticatedGuard implements CanActivate {
     }
     if (context.getType() === 'http') {
       const request = context.switchToHttp().getRequest();
-      console.log({ requestUser: request.user });
       return request.isAuthenticated();
     } else if (context.getType() === 'rpc') {
       // do something that is only important in the context of Microservice requests

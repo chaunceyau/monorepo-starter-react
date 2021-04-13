@@ -17,16 +17,14 @@ export class AuthService {
    */
   async validateUser(email: string, rawPassword: string): Promise<any> {
     const user = await this.prisma.user.findUnique({ where: { email } });
-
+    
     if (!user) throw new UnauthorizedException();
+
     const { password, salt, ...result } = user;
     const { password: hashedPassword } = await this.accountService.hashPassword(
       rawPassword,
       salt
     );
-
-    console.log('password === hashedPassword ? result : null');
-    console.log(password === hashedPassword ? result : null);
 
     return password === hashedPassword ? result : null;
   }
