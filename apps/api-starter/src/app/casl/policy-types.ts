@@ -1,11 +1,11 @@
 import { SetMetadata } from '@nestjs/common';
-import { AppAbility } from '../casl/casl-ability.factory';
+import { RbacAbility } from './casl-ability.factory';
 
 interface IPolicyHandler {
-  handle(ability: AppAbility): boolean;
+  handle(ability: RbacAbility): boolean;
 }
 
-type PolicyHandlerCallback = (ability: AppAbility) => boolean;
+type PolicyHandlerCallback = (ability: RbacAbility) => boolean;
 
 export type PolicyHandler = IPolicyHandler | PolicyHandlerCallback;
 

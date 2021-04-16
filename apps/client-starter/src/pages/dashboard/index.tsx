@@ -7,12 +7,13 @@ export function DashboardPage() {
     fetch('/api/account/hm', {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => res.json())
       .then((d) => console.log({ d }));
   }, []);
+
   return (
     <MultiNavLayout
       sidebarLinks={sidebarLinks}

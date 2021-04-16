@@ -2,13 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import '../index.css';
-import { useAuth } from '../hooks/useAuth';
+import { useViewer } from '../hooks/useViewer';
 import { LoginPage } from '../pages/auth/login';
+import { ViewportLoading } from '../pages/loading';
 import { DashboardPage } from '../pages/dashboard';
 import { RegistrationPage } from '../pages/auth/register';
 
 export function App() {
-  const user = useAuth();
+  const user = useViewer();
+  if (typeof user === 'undefined') {
+    return <ViewportLoading />;
+  }
   return user ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
 
@@ -34,4 +38,3 @@ const UnauthenticatedApp = () => (
     </Switch>
   </Router>
 );
-// return <TopNavigationLayout>lmao</TopNavigationLayout>;

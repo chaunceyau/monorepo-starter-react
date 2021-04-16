@@ -11,6 +11,7 @@ export interface ResponseObjectUser {
   current_period_end?: string
 }
 
+// TODO: convert to prisma enum 
 enum SubscriptionType {
   FREE_TIER = 'FREE_TIER',
   PREMIUM_SUBSCRIBER = 'PREMIUM_SUBSCRIBER',

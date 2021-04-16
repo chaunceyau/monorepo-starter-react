@@ -1,7 +1,6 @@
-import { useAuth } from 'apps/client-starter/src/hooks/useAuth';
 import React from 'react';
-import { RememberMyLoginInput } from './remember-me';
 import { SocialOptions } from './social-options';
+import { useAuthentication } from 'apps/client-starter/src/hooks/useViewer';
 
 const INCLUDE_SOCIAL_PROVIDERS = false;
 
@@ -41,7 +40,8 @@ export function LoginPage(props) {
     email: '',
     password: '',
   });
-  // console.log({ user });
+
+  const auth = useAuthentication();
   return (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-24 xl:px-32">
@@ -73,22 +73,7 @@ export function LoginPage(props) {
                 className="space-y-6"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const myHeaders = new Headers();
-                  myHeaders.append('Content-Type', 'application/json');
-
-                  const raw = JSON.stringify({
-                    email: 'demo@test.com',
-                    password: 'password',
-                  });
-
-                  const requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow',
-                  };
-
-                  fetch(`/api/auth/login`, requestOptions as any);
+                  auth.login(state.email, state.password);
                 }}
               >
                 <div>
