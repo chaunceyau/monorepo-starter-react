@@ -1,4 +1,6 @@
 import React from 'react';
+import { SectionHeading } from '@chaunceyau/react-components';
+//
 import { BanIcon } from '../components/icons/ban';
 import { FlagIcon } from '../components/icons/flag';
 import { ArchiveIcon } from '../components/icons/archive';
@@ -8,6 +10,7 @@ import { PencilAltIcon } from '../components/icons/pencil-alt';
 
 const PortraitsPage = () => (
   <div>
+    <SectionHeading title="2341452" />
     <span>flamsdlfmsdlamfdlsmafds</span>
   </div>
 );
