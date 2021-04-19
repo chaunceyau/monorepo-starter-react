@@ -3,6 +3,7 @@ import React from 'react';
 import { ArchiveIcon } from '../components/icons/archive';
 import { PortaitIcon } from '../components/icons/portrait';
 import { PencilAltIcon } from '../components/icons/pencil-alt';
+import { DashboardPage } from '../pages/dashboard';
 
 export const sidebarItems = [
   {
@@ -35,11 +36,6 @@ export const BASE_ROUTES = [
   {
     to: '/',
     label: 'dashboard',
-    component: () => (
-      <div>
-        <span>dashboard PAGE</span>
-      </div>
-    ),
-    // component: () => <DashboardPage />,
+    component: DashboardPage,
   },
 ];
