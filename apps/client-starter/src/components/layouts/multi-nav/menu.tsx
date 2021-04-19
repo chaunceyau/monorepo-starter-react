@@ -3,14 +3,13 @@ import React from 'react';
 import { SidebarTopNavigation } from './top-nav';
 
 interface SidebarMenuProps {
-  links: Array<Link>;
+  sidebarItems: Array<SidebarItem>;
 }
 
-export interface Link {
+export interface SidebarItem {
   to: string;
   label: string;
-  icon: any;
-  component: React.ReactNode;
+  icon: React.ReactNode;
 }
 
 function SidebarLogo(props: SidebarLogoProps) {
@@ -23,14 +22,13 @@ function SidebarLogo(props: SidebarLogoProps) {
 
 export interface SidebarLogoProps {
   logo: React.ReactNode;
-  to: string;
 }
 
 export function SidebarMenu(props: SidebarMenuProps & SidebarLogoProps) {
   return (
     <header className="flex-shrink-0 relative h-16 bg-white flex items-center">
       {/* <!-- Logo area --> */}
-      <SidebarLogo logo={props.logo} to={props.to} />
+      <SidebarLogo logo={props.logo} />
 
       {/* <!-- Picker area --> */}
       <div className="mx-auto md:hidden">

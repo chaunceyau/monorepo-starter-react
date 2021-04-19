@@ -1,46 +1,45 @@
 import React from 'react';
-import { SectionHeading } from '@chaunceyau/react-components';
 //
-import { BanIcon } from '../components/icons/ban';
-import { FlagIcon } from '../components/icons/flag';
 import { ArchiveIcon } from '../components/icons/archive';
 import { PortaitIcon } from '../components/icons/portrait';
-import { UserCircleIcon } from '../components/icons/user-circle';
 import { PencilAltIcon } from '../components/icons/pencil-alt';
 
-const PortraitsPage = () => (
-  <div>
-    <SectionHeading title="2341452" />
-    <span>flamsdlfmsdlamfdlsmafds</span>
-  </div>
-);
-
-const ArchivePage = () => (
-  <div>
-    <span>0431502134032194032194301</span>
-  </div>
-);
-
-export const sidebarLinks = [
-  { to: '/', label: 'portraits', icon: PortaitIcon, component: PortraitsPage },
+export const sidebarItems = [
   {
-    to: '/archive',
+    to: '/',
+    label: 'portraits',
+    icon: PortaitIcon,
+  },
+  {
+    to: '/2',
     label: 'archive',
     icon: ArchiveIcon,
-    component: ArchivePage,
   },
-  {
-    to: '/customers',
-    label: 'customers',
-    icon: UserCircleIcon,
-    component: ArchivePage,
-  },
-  { to: '/flagged', label: 'flagged', icon: FlagIcon, component: ArchivePage },
-  { to: '/spam', label: 'spam', icon: BanIcon, component: ArchivePage },
   {
     to: '/drafts',
     label: 'drafts',
     icon: PencilAltIcon,
-    component: ArchivePage,
+  },
+];
+
+export const BASE_ROUTES = [
+  {
+    to: '/2',
+    label: '2',
+    component: () => (
+      <div>
+        <span>ARCHIVE PAGE</span>
+      </div>
+    ),
+  },
+  {
+    to: '/',
+    label: 'portraits',
+    component: () => (
+      <div>
+        <span>PORTAIT PAGE</span>
+      </div>
+    ),
+    // component: () => <DashboardPage />,
   },
 ];
