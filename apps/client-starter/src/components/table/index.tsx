@@ -1,26 +1,14 @@
 import React from 'react';
 
-/* This example requires Tailwind CSS v2.0+ */
-const people = [
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    email: 'jane.cooper@example.com',
-  },
-  {
-    name: 'Cody Fisher',
-    title: 'Product Directives Officer',
-    email: 'cody.fisher@example.com',
-  },
-  // More people...
-];
-
-const headings = ['Name', 'Title', 'Email'];
-
 const thBaseClass =
   'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
 
-export default function Table(props: {}) {
+interface TableProps {
+  headings: string[];
+  data: any[];
+}
+
+export function Table({headings, data}: TableProps) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
@@ -46,19 +34,19 @@ export default function Table(props: {}) {
                 </tr>
               </thead>
               <tbody>
-                {people.map((person, personIdx) => (
+                {data.map((data, index) => (
                   <tr
-                    key={person.email}
-                    className={personIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                    key={data.email}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {person.name}
+                      {data.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
-                      {person.title}
+                      {data.title}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                      {person.email}
+                      {data.email}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <a
