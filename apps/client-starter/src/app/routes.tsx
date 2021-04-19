@@ -24,20 +24,20 @@ export const sidebarItems = [
 
 export const BASE_ROUTES = [
   {
-    to: '/2',
-    label: '2',
+    to: '/team',
+    label: 'team',
     component: () => (
       <div>
-        <span>ARCHIVE PAGE</span>
+        <span>team PAGE</span>
       </div>
     ),
   },
   {
     to: '/',
-    label: 'portraits',
+    label: 'dashboard',
     component: () => (
       <div>
-        <span>PORTAIT PAGE</span>
+        <span>dashboard PAGE</span>
       </div>
     ),
     // component: () => <DashboardPage />,

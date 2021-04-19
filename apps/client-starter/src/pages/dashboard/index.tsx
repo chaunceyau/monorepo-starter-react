@@ -1,5 +1,10 @@
 import React from 'react';
+import Table from '../../components/table';
 
 export function DashboardPage() {
-  return <span>welcome to the dashboard</span>;
+  return (
+    <div>
+      <Table />
+    </div>
+  );
 }
