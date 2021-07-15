@@ -46,7 +46,7 @@
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.6.15",
     "@ntegral/nestjs-sentry": "^2.0.6",
-    "@prisma/client": "^2.20.1",
+    "@prisma/client": "^2.27.0",
     "@sentry/node": "^6.2.5",
     "apollo-server-express": "^2.22.2",
     "bcrypt": "^5.0.1",
